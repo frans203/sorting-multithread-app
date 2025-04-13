@@ -1,0 +1,31 @@
+EXPLICAÇÃO DO CODIGO
+
+Inicialmente definimos o tamanho da array atraves da função SIZE
+criamos a lista original com o tamanho definido e criamos outra array, vazia, que sera a sorted lista
+Criamos também um struct, que vai possuir duas propriedades: start e end, sera usado para cada thread
+responsavel por fazer o sort para identificar que parte da array original ele deve começar o sorting 
+e até onde deve ir.
+
+Na função main definimos o id das 3 threads, as duas threas q fazer o sort de diferentes metades da array original
+e um id de thread que sera responsavel por fazer o merge do resultado de ambas as threads em uma array nova
+Em seguida definimos os duas variaveis de arguments, que sera usado na futura função responsavel por fazer o
+sort de uma metade de array. Essas variaveis de arguments são do tipo ThreadArgs, com start e end.
+O primeiro, args1, tem o start como 0 e o end como SIZE/2, já o args2 tem start como SIZE/2 E end como SIZE
+
+Temos a função sortSublist, que vai receber um parametro do tipo void * e retorna também um ponteiro para nada.
+Isso é necessário pois a função sera usada pelo metodo pthread_create, e por exigencia da API de threads do POSIX
+basicamente é necessario deixar a assinatura da função dessa forma
+
+Logo em seguida fazemos o casting do args para ThreadArgs, onde poderemos pegar o start e o end. 
+Após isso é realizado o processo de ordenação usando bubble sort.
+Vamos passar pela array, um valor por vez, para cada valor compara-se com o própximo. Se o valor atual
+é maior que o próximo valor, faça o swap dos valores. Esse processo será realizado novamente para cada item 
+na array. Após a ordenação chamamos pthread_exit(NULL) indicando que a thread já foi finalizada. 
+
+Voltando para a função main, a função sortSublist eh chamada dentro do pthread_create.
+Para cada thread criada passamos o id da thread, a função que será executada nessa thread e o endereço dos respectivos argumentos
+para cada thread. Esses argumentos serão args1 e args2, definidos anteriormente. Ou seja em cada thread será
+passado o ponteiro para cada um dos argumentos e dentro das threads, como visto anteriormente, será feito o casting
+desses argumentos.
+
+Em seguida usamos pthread_join que vai basicamente fazer o programa esperar as duas threads anteriores
