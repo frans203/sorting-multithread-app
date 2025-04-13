@@ -35,6 +35,6 @@ jobs:
           key: ${{ secrets.LIGHTSAIL_PRIVATE_KEY }}
           script: |
             docker pull ${{ secrets.DOCKER_USERNAME }}/multithread-sorting-app:latest
-            docker stop sorting-app || true 
-            docker rm sorting-app || true 
-            docker run -d --name sorting-app ${{ secrets.DOCKER_USERNAME }}/multithread-sorting-app:latest
+            sudo docker stop sorting-app || true 
+            sudo docker rm sorting-app || true 
+            sudo docker run -d --name sorting-app ${{ secrets.DOCKER_USERNAME }}/multithread-sorting-app:latest
