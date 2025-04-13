@@ -6,5 +6,5 @@ COPY . .
 
 RUN gcc -pthread -o main main.c 
 
-CMD ['./main']
+CMD ["./main"]
 
