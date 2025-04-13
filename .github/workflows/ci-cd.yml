@@ -21,3 +21,20 @@ jobs:
 
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/multithread-sorting-app:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Deploy to Lightsail
+        uses: appleboy/ssh-actions@v0.1.10
+        with:
+          host: ${{ secrets.LIGHTSAIL_HOST }}
+          username: ${{ secrets.LIGHTSAIL_USER }}
+          key: ${{ secrets.LIGHTSAIL_PRIVATE_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/multithread-sorting-app:latest
+            docker stop sorting-app || true 
+            docker rm sorting-app || true 
+            docker run -d --name sorting-app ${{ secrets.DOCKER_USERNAME }}/multithread-sorting-app:latest
