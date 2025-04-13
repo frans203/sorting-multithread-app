@@ -37,4 +37,4 @@ jobs:
             docker pull ${{ secrets.DOCKER_USERNAME }}/multithread-sorting-app:latest
             sudo docker stop sorting-app || true 
             sudo docker rm sorting-app || true 
-            sudo docker run -d --name sorting-app ${{ secrets.DOCKER_USERNAME }}/multithread-sorting-app:latest
+            sudo docker run --name sorting-app ${{ secrets.DOCKER_USERNAME }}/multithread-sorting-app:latest
