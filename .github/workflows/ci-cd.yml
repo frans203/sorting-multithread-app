@@ -33,6 +33,7 @@ jobs:
           host: ${{ secrets.LIGHTSAIL_HOST }}
           username: ${{ secrets.LIGHTSAIL_USER }}
           key: ${{ secrets.LIGHTSAIL_PRIVATE_KEY }}
+          passphrase: ${{ secrets.LIGHTSAIL_PASS }}
           script: |
             docker pull ${{ secrets.DOCKER_USERNAME }}/multithread-sorting-app:latest
             docker stop sorting-app || true 
