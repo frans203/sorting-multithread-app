@@ -28,4 +28,29 @@ para cada thread. Esses argumentos serão args1 e args2, definidos anteriormente
 passado o ponteiro para cada um dos argumentos e dentro das threads, como visto anteriormente, será feito o casting
 desses argumentos.
 
-Em seguida usamos pthread_join que vai basicamente fazer o programa esperar as duas threads anteriores
+Em seguida usamos pthread_join que vai basicamente fazer o programa esperar as duas threads anteriores serem 
+executadas.
+
+Após a execução das duas threads anteriores temos pthread_create novamente onde vamos passar o endereço
+da thread de merge e a função a ser executada naquela thread, que será a mergeSublists 
+
+Como a função mergeSublists também vai ser utilizada dentro de uma thread temos que ter o mesmo 
+tipo de retorno e valor dos argumentos, como descrito anteriormente. Inicialmente definimos mid como metade do SIZE,
+i como 0, este sera o apontador para a primeira metade. J sera o apontador para a segunda metade e seu valor inicial sera mid.
+k será 0 e vai ser o apontador para o array final. No primeiro loop, que será executado 
+enquanto i for menor que mid e j menor que SIZE, verificamos se o valor na original list no index i é menor
+que o valor na original list no indice j, se for, colocamos o que está no index i na original list como valor do sorted list, se não,
+sera com o index j. Em ambos os casos os valores dos apontadores, j, i, k, são incrementados.
+
+Caso ainda houver algo na primeira metade a ser copiado, ou seja, enquanto i AINDA for menor que mid,
+definimos o valor de sortedList no indice k para ser igual ao valor no indice i na originalList. Incrementa-se
+sempre os dois valores no final
+O mesmo acontece para a segunda metdade, mas em vez de i, usamos J, e o loop continua enquanto j for menor que SIZE
+
+No final, como isso será feito dentro de uma thread temos que dar pthread_exit(NULL) para sair da thread.
+
+Voltando a função main, após a executação do mergeSublists usamos pthread_join passando o valor do id da thread
+de merge para esperar pela thread anterior ser finalizada.
+No final damos o print de todos os valores mostrando que a array foi ordenada 
+
+
