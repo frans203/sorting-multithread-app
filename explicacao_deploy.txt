@@ -1,0 +1,29 @@
+Primeiramente foi criado o dockerfile que vai criar um container com tudo
+que e necessario para a aplicação rodar, e então, a roda. 
+
+Dentro do arquivo .yml a primeira parte é a parte de build onde basicamente enviamos o container criado no 
+dockerfile para o dockerhub. No dockerhub foi posteriormente criado um repositorio especifico para receber esse container
+e é possivel acessar ele através do comando docker pull frans203/multithread-sorting-app:latest
+
+Após isso tem-se a parte do deployment. Para tal foi criado uma maquina virtual no serviço da aws chamado Lightsail.
+Vamos enviar atraves do github actions o container e ele sera executado na maquina virtual. 
+Para tal iniciamos uma maquina virtual no light sail e vamos nos conectar com ela atraves do ssh.
+
+Para tornamos a conexão possivel, primeiro em uma maquina linux 
+geramos uma chave ssh com ssh-keygen -t ed25519 -C "github-deploy"
+salvando a chave como lightsail_deploy_key. Teremos a chave privada e a chave publica (mesmo arquivo mas com final .pub)
+
+Agora, dentro do lightsail vamos colocar dentro do arquivo .ssh/authorized_keys 
+a nossa chave publica.
+ 
+Assim já é possivel se conectar ao github actions remotamente 
+Precisamos também instalar o docker na nossa maquina do lightsail 
+
+Como agora já é possivel conectar-se ao servidor via github actions, agora vamos
+atualizar o arquivo .yml com a rotina de deploy que vai executar o docker no servidor do lightsail
+para isso precisamos, além de modificar o arquivo, criar as respectivias variaveis que vao tornar o acesso possivel
+o host, user (esses dois são facilmente visiveis no dashboard do lightsail) e a private_key.
+Para descobrir a private key, na maquina linux criada basicamente acessamos o conteudo lightsail_deploy_key e copiamos
+para as chaves do github. Agora com nosso arquivo de deploy completo, podemos executa-lo e ele vai gerar um novo container, enviar
+para o dockerhub e em seguida executar ele no nosso servidor ubuntu no lightsail. 
+
