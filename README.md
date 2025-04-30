@@ -32,8 +32,8 @@ gcc -pthread -o sorting_app main.c
 
 ### Para construir e correr com Docker:
 ```bash
-docker build -t multithread-sorting-app .
-docker run multithread-sorting-app
+docker pull frans203/multithread-sorting-app:latest
+ sudo docker run --name sorting-app frans203/multithread-sorting-app:latest
 ```
 
 ### Para usar GitHub Actions:
