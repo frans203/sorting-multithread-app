@@ -48,10 +48,6 @@ docker pull frans203/multithread-sorting-app:latest
 - Muda o número de threads diretamente no código (variável `thread_counts`).
 - O programa gera arrays aleatórios para testar cada execução.
 - No final de cada teste, é impresso o tempo de execução em milissegundos para cada configuração de threads.
-- Para comparar:
-  - Corre o programa várias vezes e anota os tempos.
-  - Cria uma tabela ou gráfico para análise visual.
-
 ---
 
 ## 📊 Comparativo de Desempenho
