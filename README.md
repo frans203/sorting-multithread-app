@@ -77,7 +77,7 @@ docker run multithread-sorting-app
 - [Rainer Carneiro]
 
 ### Desenvolvimento do código de 4 threads:
-- [João Vittor Alves]
+- [João Vittor Alves/Rainer Carneiro]
 
 ### Implementação do Docker e Dockerfile:
 - [Francisco Santana]
