@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <time.h> 
 
 #define SIZE 10 // tamanho do array original
 
@@ -19,7 +20,7 @@ void *sortSublist(void *args) { //precisa do * por exigencia da API de threads d
     int start = range->start;
     int end = range->end;
 
-    for(int i = start; i < end-1;i++){
+    for(int i = start; i < end-1;i++) {//Ordenação usando bubble sort
         for(int j = start;j<end - 1 - (i-start);j++){
             if(originalList[j] > originalList[j+1]) {
                 int temp = originalList[j];
@@ -61,6 +62,10 @@ int main() {
     //declaração de 3 identificadores de thread
     pthread_t tid_sort1, tid_sort2, tid_merge;
 
+    //Marcadores de tempo
+    struct timespec start_time, end_time;
+    clock_gettime(CLOCK_MONOTONIC, &start_time); // <-- Início da medição
+
     //Define os indices das sublistas a serem ordenadas
     ThreadArgs args1 = {0, SIZE/2};
     ThreadArgs args2 = {SIZE/2, SIZE};
@@ -77,14 +82,18 @@ int main() {
     pthread_create(&tid_merge, NULL, mergeSublists, NULL);
     pthread_join(tid_merge, NULL); //espera a thread de merge finalziar 
 
-    printf("Lista ordenada: ");
+    clock_gettime(CLOCK_MONOTONIC, &end_time); // <-- Fim da medição
 
+    printf("Lista ordenada: ");
     for(int i=0;i<SIZE;i++){ //mostra a lista ordenada
         printf("%d ", sortedList[i]);
     }
-
     printf("\n");
+
+    //Cálculo do tempo decorrido em milissegundos
+    double elapsed_ms = (end_time.tv_sec - start_time.tv_sec) * 1000.0 +
+                        (end_time.tv_nsec - start_time.tv_nsec) / 1000000.0;
+    printf("Tempo de execução: %.3f ms\n", elapsed_ms);
 
     return 0 ;
 }
-
