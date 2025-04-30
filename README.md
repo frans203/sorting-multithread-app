@@ -63,7 +63,7 @@ docker pull frans203/multithread-sorting-app:latest
 | Código com 4 threads     | 4             | 2.371 ms                 |
 
 ###  Observações:
-- Com arrays pequenos (10.000 elementos), o ganho de performance com mais threads nem sempre é garantido.
+- Com arrays pequenos, o ganho de performance com mais threads nem sempre é garantido.
 - O código com 2 threads foi mais eficiente que o com 4 threads, pois a sobrecarga de criação e sincronização de múltiplas threads superou os benefícios do paralelismo.
 
 ---
